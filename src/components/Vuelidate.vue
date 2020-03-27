@@ -1,75 +1,68 @@
 <template>
-  <b-container>
+  <b-container class="text-left">
     <b-card>
-      <b-aspect aspect="2:1">
-        <b-form @submit.stop.prevent="onSubmit">
-          <b-form-group
-            id="example-input-group-1"
-            label="Name"
-            label-for="example-input-1"
+      <b-form @submit.stop.prevent="onSubmit">
+        <b-form-group
+          id="example-input-group-1"
+          label="Name"
+          label-for="example-input-1"
+        >
+          <b-form-input
+            id="example-input-1"
+            name="example-input-1"
+            v-model="$v.form.name.$model"
+            :state="validateState('name')"
+            aria-describedby="input-1-live-feedback"
+          ></b-form-input>
+
+          <b-form-invalid-feedback id="input-1-live-feedback"
+            >This is a required field and must be at least 3
+            characters.</b-form-invalid-feedback
           >
-            <b-form-input
-              id="example-input-1"
-              name="example-input-1"
-              v-model="$v.form.name.$model"
-              :state="validateState('name')"
-              aria-describedby="input-1-live-feedback"
-            ></b-form-input>
+        </b-form-group>
 
-            <b-form-invalid-feedback id="input-1-live-feedback"
-              >This is a required field and must be at least 3
-              characters.</b-form-invalid-feedback
-            >
-          </b-form-group>
+        <b-form-group
+          id="example-input-group-2"
+          label="Food"
+          label-for="example-input-2"
+        >
+          <b-form-select
+            id="example-input-2"
+            name="example-input-2"
+            v-model="$v.form.food.$model"
+            :options="foods"
+            :state="validateState('food')"
+            aria-describedby="input-2-live-feedback"
+          ></b-form-select>
 
-          <b-form-group
-            id="example-input-group-2"
-            label="Food"
-            label-for="example-input-2"
+          <b-form-invalid-feedback id="input-2-live-feedback"
+            >This is a required field.</b-form-invalid-feedback
           >
-            <b-form-select
-              id="example-input-2"
-              name="example-input-2"
-              v-model="$v.form.food.$model"
-              :options="foods"
-              :state="validateState('food')"
-              aria-describedby="input-2-live-feedback"
-            ></b-form-select>
+        </b-form-group>
 
-            <b-form-invalid-feedback id="input-2-live-feedback"
-              >This is a required field.</b-form-invalid-feedback
-            >
-          </b-form-group>
+        <b-button type="submit" variant="primary">Submit</b-button>
+        <b-button class="ml-2" @click="resetForm()">Reset</b-button>
+      </b-form>
+    </b-card>
 
-          <b-button type="submit" variant="primary">Submit</b-button>
-          <b-button class="ml-2" @click="resetForm()">Reset</b-button>
-        </b-form>
-      </b-aspect>
+    <b-card>
+      <b-form-input
+        type="text"
+        v-model="$v.form.title.$model"
+        :state="validateState('title')"
+        aria-describedby="input-title-live-feedback"
+      />
+      <b-form-invalid-feedback id="input-title-live-feedback"
+        >This is a required field and must be at least 3
+        characters.</b-form-invalid-feedback
+      >
     </b-card>
   </b-container>
 </template>
 
-<script>
-// import { validationMixin } from "vuelidate";
-import { required, minLength, between } from "vuelidate/lib/validators";
-
-export default {
-  // mixins: [validationMixin],
-  validations: {
-    name: {
-      required,
-      minLength: minLength(4)
-    },
-    age: {
-      between: between(20, 30)
-    }
-  }
-};
-</script>
-
 <style>
-body {
-  padding: 1rem;
+.card {
+  margin-bottom: 1rem;
 }
 </style>
 
@@ -88,7 +81,8 @@ export default {
       ],
       form: {
         name: null,
-        food: null
+        food: null,
+        title: null
       }
     };
   },
@@ -100,6 +94,9 @@ export default {
       name: {
         required,
         minLength: minLength(3)
+      },
+      title: {
+        required
       }
     }
   },
