@@ -2,7 +2,7 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
     <HelloWorld v-show="false" msg="Welcome to Your Vue.js App" />
-    <Bootstrap4 v-show="false" />
+    <Bootstrap4 v-show="true" />
     <Vuelidate />
   </div>
 </template>
